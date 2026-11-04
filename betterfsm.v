@@ -34,7 +34,7 @@ always @(*) begin
             state_duration = RED_WAIT_TIME;
         end
         RED_YELLOW: begin
-            next_state < GREEN;
+            next_state = GREEN;
             state_duration = YELLOW_SHOW_TIME;
         end
         GREEN: begin
