@@ -30,24 +30,24 @@ end
 always @(*) begin
     case (current_state)
         RED: begin
-            next_state <= RED_YELLOW;
-            state_duration <= RED_WAIT_TIME;
+            next_state = RED_YELLOW;
+            state_duration = RED_WAIT_TIME;
         end
         RED_YELLOW: begin
-            next_state <= GREEN;
-            state_duration <= YELLOW_SHOW_TIME;
+            next_state < GREEN;
+            state_duration = YELLOW_SHOW_TIME;
         end
         GREEN: begin
-            next_state <= YELLOW;
-            state_duration <= GREEN_GO_TIME;
+            next_state = YELLOW;
+            state_duration = GREEN_GO_TIME;
         end
         YELLOW: begin
-            next_state <= RED;
-            state_duration <= YELLOW_SHOW_TIME;
+            next_state = RED;
+            state_duration = YELLOW_SHOW_TIME;
         end
         default: begin
-            next_state <= RED_YELLOW;
-            state_duration <= RED_WAIT_TIME;
+            next_state = RED_YELLOW;
+            state_duration = RED_WAIT_TIME;
         end
     endcase
 end
@@ -58,6 +58,7 @@ always @(posedge clk) begin
         current_state <= RED;
         state_duration <= RED_WAIT_TIME;
         next_state <= RED_YELLOW;
+        t <= 4'd0;
     end else if (t == state_duration - 1) begin
         colour <= next_state;
         current_state <= next_state;
