@@ -17,3 +17,4 @@ tags
 *.vvp
 *.vcd
 *.dot
+*.pyc
