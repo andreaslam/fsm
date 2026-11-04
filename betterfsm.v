@@ -1,4 +1,3 @@
-
 `timescale 1s/1ms
 
 module traffic_light(
