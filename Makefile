@@ -13,7 +13,7 @@ COCOTB_TOPLEVEL = traffic_light
 # The Python modules which contain your testcases.
 # The current directory is included in the Python path,
 # so you can just specify the module name without the .py extension.
-COCOTB_TEST_MODULES = fsm_tests
+COCOTB_TEST_MODULES = test_traffic_light
 
 # Enable waveform generation.
 WAVES = 1
