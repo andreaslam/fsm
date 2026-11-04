@@ -91,7 +91,7 @@ async def yellow_to_red_transition(dut):
 def test_traffic_light():
     proj_path = Path(__file__).resolve().parent
 
-    source = [proj_path / "fsm.v"]
+    source = [proj_path / "betterfsm.v"]
 
     runner = get_runner(SIM)
     runner.build(
