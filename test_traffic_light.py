@@ -25,15 +25,6 @@ async def test_init(dut):
     assert dut.colour.value == RED
 
 
-async def run_clock(dut):
-    """Run a clock with a 1 s period indefinitely"""
-    while True:
-        dut.clk.value = 1
-        await Timer(1, "s")
-        dut.clk.value = 0
-        await Timer(1, "s")
-
-
 async def reset(dut):
     dut.rst.value = 1
 
