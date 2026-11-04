@@ -1,6 +1,7 @@
 #
 # Generated directories to exclude
 #
+sim_build
 build/*
 
 #
