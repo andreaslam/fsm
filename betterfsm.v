@@ -60,12 +60,15 @@ always @(posedge clk) begin
         next_state <= RED_YELLOW;
         t <= 4'd0;
     end else if (t == state_duration - 1) begin
-        colour <= next_state;
         current_state <= next_state;
         t <= '0;
     end else begin
     t <= t + 1;
     end
+end
+
+always @(*) begin
+    colour = current_state;
 end
 
 endmodule
