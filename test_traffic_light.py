@@ -1,4 +1,5 @@
 from pathlib import Path
+import random
 
 import cocotb
 from cocotb.clock import Clock
@@ -26,6 +27,7 @@ async def test_init(dut):
 
 
 async def reset(dut):
+    await Timer(1, unit="ms")
     dut.rst.value = 1
 
     cocotb.start_soon(Clock(dut.clk, 10, unit="ms").start())
@@ -75,6 +77,33 @@ async def yellow_to_red_transition(dut):
         dut, RED_WAIT_TIME + YELLOW_SHOW_TIME + GREEN_GO_TIME + YELLOW_SHOW_TIME
     )
     assert dut.colour.value == RED
+
+@cocotb.test
+async def random_timeout_test(dut):
+    """Tests whether the transition after a random number of seconds is correct"""
+    cocotb.start_soon(Clock(dut.clk, 10, unit="ms").start())
+
+    phases = [
+        (RED, 0, RED_WAIT_TIME),
+        (RED_YELLOW, RED_WAIT_TIME, RED_WAIT_TIME + YELLOW_SHOW_TIME),
+        (
+            GREEN,
+            RED_WAIT_TIME + YELLOW_SHOW_TIME,
+            RED_WAIT_TIME + YELLOW_SHOW_TIME + GREEN_GO_TIME,
+        ),
+        (
+            YELLOW,
+            RED_WAIT_TIME + YELLOW_SHOW_TIME + GREEN_GO_TIME,
+            RED_WAIT_TIME + YELLOW_SHOW_TIME + GREEN_GO_TIME + YELLOW_SHOW_TIME,
+        ),
+    ]
+
+    for expected, start, end in phases:
+        for _ in range(10):
+            await reset(dut)
+            cycles = random.randint(start, end - 1)
+            await wait_cycles(dut, cycles)
+            assert dut.colour.value == expected
 
 
 def test_traffic_light():
