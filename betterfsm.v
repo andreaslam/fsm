@@ -3,7 +3,7 @@
 module traffic_light(
     input clk,
     input rst,
-    output reg [1:0] colour
+    output wire [1:0] colour
 );
 
 localparam [1:0] RED = 2'b00;
@@ -19,7 +19,7 @@ reg [1:0] current_state;
 reg [1:0] next_state;
 
 reg [3:0] state_duration;
-reg [3:0] t;
+reg [3:0] timer;
 
 always @(*) begin
     case (current_state)
@@ -53,13 +53,13 @@ end
 always @(posedge clk) begin
     if (rst) begin
         current_state <= RED;
-        t <= 4'd0;
+        timer <= 4'd0;
     end
-    else if (t == state_duration - 1'b1) begin
+    else if (timer == state_duration - 1'b1) begin
         current_state <= next_state;
-        t <= '0;
+        timer <= '0;
     end else begin
-    t <= t + 1;
+    timer <= timer + 1;
     end
 end
 
