@@ -3,7 +3,7 @@
 module traffic_light(
     input clk,
     input rst,
-    output wire [1:0] colour
+    output reg [1:0] colour
 );
 
 localparam [1:0] RED = 2'b00;
